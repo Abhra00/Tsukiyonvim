@@ -11,8 +11,9 @@
 #### TELESCOPE
 
 - File Picker
-  - ![telescope-file-picker](assets/telescope-file-picker.png)
-  - ![telescope-file-browser](assets/telescope-filebrowser.png)
+    - ![telescope-file-picker](assets/telescope-file-picker.png)
+- File Browser
+    - ![telescope-file-browser](assets/telescope-filebrowser.png)
 
 #### NOICEUI
 

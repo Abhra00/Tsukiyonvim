@@ -33,8 +33,8 @@ return {
         { 's', group = 'Flash' },
         { 'g', group = 'Goto' },
         { 'gs', group = 'Mini -> Surround', icon = { icon = '󰅪 ', color = 'white' } },
-        { '<leader>sr', desc = '[S]earch & [R]eplace(Grug Far)', icon = { icon = ' ', color = 'green' } },
-        { '<leader>/', desc = '[T]oggle [C]omments' },
+        { '<leader>sr', desc = '[S]earch & [R]eplace(Grug Far)' },
+        { '<leader>/', desc = '[T]oggle [C]omments', icon = { icon = ' ', color = 'green' } },
       },
       -- show a warning when issues were detected with your mappings
       notify = true,

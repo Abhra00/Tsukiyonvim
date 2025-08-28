@@ -166,17 +166,17 @@ return {
     local builtin = require 'telescope.builtin'
 
     -- set a vim motion to <Space> + f + f to search for files by their names
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles Using Telescope'  })
     -- set a vim motion to <Space> + f + g to search for files based on the text inside of them
-    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind By [G]rep Using Telescope' })
     -- set a vim motion to <Space> + f + d to search for Code Diagnostics in the current project
-    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
+    vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics Using Telescope' })
     -- set a vim motion to <Space> + f + r to resume the previous search
-    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]inder [R]esume' })
+    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]inder [R]esume Using Telescope' })
     -- set a vim motion to <Space> + f + . to search for Recent Files
-    vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files ("." for repeat)' })
+    vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files Using Telescope ("." for repeat)' })
     -- set a vim motion to <Space> + f + b to search Open Buffers
-    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind Existing [B]uffers' })
+    vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind Existing [B]uffers Using Telescope' })
 
     -- set a vim motion to <Space> + f + e to open telescope file explorer
     vim.keymap.set('n', '<leader>fe', function()

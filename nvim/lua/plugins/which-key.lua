@@ -25,15 +25,15 @@ return {
         { '<leader>d', group = 'Debug' },
         { '<leader>sn', group = 'Noice' },
         { '<leader>gg', group = 'Git' },
-        { '<leader>l', group = 'Live Preview' },
-        { '<leader>h', group = 'Harpoon' },
-        { '<leader>i', group = 'Image Clip' },
-        { '<leader>J', group = 'Java' },
+        { '<leader>l', group = 'Live Preview', icon = { icon = ' ', color = 'blue' } },
+        { '<leader>h', group = 'Harpoon', icon = { icon = '󰀱 ', color = 'yellow' } },
+        { '<leader>i', group = 'Image Clip', icon = { icon = ' ', color = 'green' } },
+        { '<leader>J', group = 'Java', icon = { icon = ' ', color = 'purple' } },
         { '<leader>w', group = 'Window' },
         { 's', group = 'Flash' },
         { 'g', group = 'Goto' },
-        { 'gs', group = 'Mini -> Surround' },
-        { '<leader>sr', desc = '[S]earch & [R]eplace(Grug Far)' },
+        { 'gs', group = 'Mini -> Surround', icon = { icon = '󰅪 ', color = 'white' } },
+        { '<leader>sr', desc = '[S]earch & [R]eplace(Grug Far)', icon = { icon = ' ', color = 'green' } },
         { '<leader>/', desc = '[T]oggle [C]omments' },
       },
       -- show a warning when issues were detected with your mappings
@@ -134,15 +134,7 @@ return {
         -- set to false to disable all mapping icons,
         -- both those explicitely added in a mapping
         -- and those from rules
-        mappings = false,
-        --- See `lua/which-key/icons.lua` for more details
-        --- Set to `false` to disable keymap icons from rules
-        rules = {
-          { pattern = 'folder', icon = ' ', color = 'blue' },
-          { pattern = 'doc', icon = ' ', color = 'blue' },
-          { pattern = 'next', icon = ' ', color = 'green' },
-          { pattern = 'prev', icon = ' ', color = 'green' },
-        },
+        mappings = true,
         -- use the highlights from mini.icons
         -- When `false`, it will use `WhichKeyIcon` instead
         colors = true,
@@ -152,7 +144,7 @@ return {
           Down = '',
           Left = '',
           Right = '',
-          C = '󰘴',
+          C = '󰅃',
           M = '󰘵',
           D = '󰘳',
           S = '󰶣',

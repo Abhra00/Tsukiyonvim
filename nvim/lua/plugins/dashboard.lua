@@ -12,7 +12,7 @@ return {
     -- Dashboard Buttons
     dashboard.section.buttons.val = {
       dashboard.button('f', '󰭎  Find file', '<cmd>Telescope find_files<cr>'),
-      dashboard.button('n', '󰈚  New file', '<cmd>ene<cr>'),
+      dashboard.button('n', '󰪷  New file', '<cmd>ene<cr>'),
       dashboard.button('r', '  Recent files', '<cmd>Telescope oldfiles<cr>'),
       dashboard.button('g', '󰉿  Find text', '<cmd>Telescope live_grep<cr>'),
       dashboard.button('c', '  Config', "<cmd>lua require('telescope.builtin').find_files({ cwd = '~/.config/nvim' })<cr>"),

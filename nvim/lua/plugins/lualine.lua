@@ -243,16 +243,16 @@ return {
               -- Standard unicode symbol for when LSP is done:
               done = ' ',
               -- Delimiter inserted between LSP names:
-              separator = ' ',
+              separator = '',
             },
             -- List of LSP names to ignore (e.g., `null-ls`):
-            ignore_lsp = { 'null-ls', 'emmet_ls' },
+            ignore_lsp = { 'null-ls' },
           },
         },
         lualine_x = {
           diagnostics,
           diff,
-          { 'fileformat', symbols = { unix = ' ' }, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui0E } },
+          { 'fileformat', symbols = { unix = '' }, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui0E } },
           { 'encoding', cond = hide_in_width, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui0B } },
           { 'filetype', cond = hide_in_width, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui05 } },
         },

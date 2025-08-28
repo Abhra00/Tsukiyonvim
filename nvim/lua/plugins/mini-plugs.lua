@@ -1,13 +1,13 @@
 return {
   {
-    'echasnovski/mini.icons',
+    'nvim-mini/mini.icons',
     version = false,
     lazy = true,
     opts = {
       default = {
-        file = { glyph = '󰈚', hl = 'MiniIconsYellow' },
-        filetype = { glyph = '󰈚', hl = 'MiniIconsYellow' },
-        extension = { glyph = '󰈚', hl = 'MiniIconsYellow' },
+        file = { glyph = '󰪷', hl = 'MiniIconsYellow' },
+        filetype = { glyph = '󰪷', hl = 'MiniIconsYellow' },
+        extension = { glyph = '󰪷', hl = 'MiniIconsYellow' },
       },
       file = {
         ['.keep'] = { glyph = '󰊢', hl = 'MiniIconsGrey' },
@@ -27,13 +27,13 @@ return {
     end,
   },
   {
-    'echasnovski/mini.ai',
+    'nvim-mini/mini.ai',
     version = false,
     event = 'VeryLazy',
     opts = {},
   },
   {
-    'echasnovski/mini.surround',
+    'nvim-mini/mini.surround',
     version = false,
     event = 'VeryLazy',
     config = function()
@@ -51,7 +51,7 @@ return {
     end,
   },
   {
-    'echasnovski/mini.indentscope',
+    'nvim-mini/mini.indentscope',
     event = { 'BufReadPost', 'BufNewFile' },
     version = false,
     opts = {
@@ -59,7 +59,7 @@ return {
     },
   },
   {
-    'echasnovski/mini.pairs',
+    'nvim-mini/mini.pairs',
     event = 'VeryLazy',
     version = false,
     opts = {},

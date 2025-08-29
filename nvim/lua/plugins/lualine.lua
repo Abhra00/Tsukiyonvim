@@ -88,7 +88,7 @@ return {
         removed = icons.git.LineRemoved,
       }, -- changes diff symbols
       cond = hide_in_width,
-      color = { bg = vim.g.base16_gui01 },
+      color = { bg = vim.g.base16_gui02 },
     }
 
     -- Define provider function for current working directory
@@ -161,7 +161,7 @@ return {
       local total = vim.fn.line '$'
       local pos = math.floor(cur / total * 100)
 
-      local bg = vim.g.base16_gui02
+      local bg = vim.g.base16_gui01
 
       if pos <= 5 then
         return { fg = vim.g.base16_gui0B, bg = bg, gui = 'bold' }
@@ -252,11 +252,11 @@ return {
         lualine_x = {
           diagnostics,
           diff,
-          { 'fileformat', symbols = { unix = '' }, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui0E } },
-          { 'encoding', cond = hide_in_width, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui0B } },
-          { 'filetype', cond = hide_in_width, color = { bg = vim.g.base16_gui01, fg = vim.g.base16_gui05 } },
+          { 'fileformat', symbols = { unix = '' }, color = { bg = vim.g.base16_gui02, fg = vim.g.base16_gui0E } },
+          { 'encoding', cond = hide_in_width, color = { bg = vim.g.base16_gui02, fg = vim.g.base16_gui0B } },
+          { 'filetype', cond = hide_in_width, color = { bg = vim.g.base16_gui02, fg = vim.g.base16_gui05 } },
         },
-        lualine_y = { { location_component, color = { fg = vim.g.base16_gui09, bg = vim.g.base16_gui01 } } },
+        lualine_y = { { location_component, color = { fg = vim.g.base16_gui09, bg = vim.g.base16_gui02 } } },
         lualine_z = { { progress_component, color = progress_color } },
       },
       inactive_sections = {

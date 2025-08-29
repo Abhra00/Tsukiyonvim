@@ -18,10 +18,8 @@ return {
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'nvim-telescope/telescope-file-browser.nvim' },
-
     -- Useful for getting pretty icons, but requires a Nerd Font.
-    { 'nvim-mini/mini.icons', version = false, enabled = vim.g.have_nerd_font },
+    { 'nvim-mini/mini.icons', version = false },
   },
   config = function()
     -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -50,7 +48,6 @@ return {
 
     -- For convenience
     local actions = require 'telescope.actions'
-    local fb_actions = require('telescope').extensions.file_browser.actions
 
     require('telescope').setup {
       -- You can put your default mappings / updates / etc. in here
@@ -120,33 +117,6 @@ return {
         },
       },
       extensions = {
-        file_browser = {
-          dir_icon = ' ' .. icons.ui.Folder .. ' ',
-          dir_icon_hl = 'TelescopeDirIcon',
-          mappings = {
-            -- your custom insert mode mappings
-            ['n'] = {
-              -- your custom normal mode mappings
-              ['N'] = fb_actions.create,
-              ['h'] = fb_actions.goto_parent_dir,
-              ['/'] = function()
-                vim.cmd 'startinsert'
-              end,
-              ['<C-u>'] = function(prompt_bufnr)
-                for i = 1, 10 do
-                  actions.move_selection_previous(prompt_bufnr)
-                end
-              end,
-              ['<C-d>'] = function(prompt_bufnr)
-                for i = 1, 10 do
-                  actions.move_selection_next(prompt_bufnr)
-                end
-              end,
-              ['<PageUp>'] = actions.preview_scrolling_up,
-              ['<PageDown>'] = actions.preview_scrolling_down,
-            },
-          },
-        },
         ['ui-select'] = {
           layout_config = {
             height = 0.5,
@@ -160,13 +130,12 @@ return {
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
-    pcall(require('telescope').load_extension, 'file_browser')
 
     -- See `:help telescope.builtin`
     local builtin = require 'telescope.builtin'
 
     -- set a vim motion to <Space> + f + f to search for files by their names
-    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles Using Telescope'  })
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles Using Telescope' })
     -- set a vim motion to <Space> + f + g to search for files based on the text inside of them
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind By [G]rep Using Telescope' })
     -- set a vim motion to <Space> + f + d to search for Code Diagnostics in the current project
@@ -177,26 +146,5 @@ return {
     vim.keymap.set('n', '<leader>f.', builtin.oldfiles, { desc = '[F]ind Recent Files Using Telescope ("." for repeat)' })
     -- set a vim motion to <Space> + f + b to search Open Buffers
     vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind Existing [B]uffers Using Telescope' })
-
-    -- set a vim motion to <Space> + f + e to open telescope file explorer
-    vim.keymap.set('n', '<leader>fe', function()
-      local telescope = require 'telescope'
-
-      local function telescope_buffer_dir()
-        return vim.fn.expand '%:p:h'
-      end
-
-      telescope.extensions.file_browser.file_browser {
-        path = '%:p:h',
-        cwd = telescope_buffer_dir(),
-        respect_gitignore = false,
-        hidden = true,
-        grouped = true,
-        previewer = false,
-        prompt_prefix = ' ' .. icons.ui.TelescopeFileBrowser .. ' ',
-        initial_mode = 'normal',
-        layout_config = { height = 0.55, width = 0.55 },
-      }
-    end, { desc = '[F]ile [E]xplorer With Telescope In The Path Of The Current Buffer' })
   end,
 }

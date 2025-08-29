@@ -54,12 +54,29 @@ vim.g.border_style = { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
 
 -- Set fill chars
 vim.opt.fillchars:append {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
+  foldopen = '',
+  foldclose = '',
+  fold = ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = ' ',
+}
+
+-- Set list chars
+vim.opt.listchars = {
+  space = '·',
+  tab = '󰶻 ',
+  eol = '↵',
+  nbsp = '␣',
+}
+
+-- Append extra stylistic symbols
+vim.opt.listchars:append {
+  trail = '·',
+  lead = '·',
+  extends = '⟩',
+  precedes = '⟨',
+  conceal = '┃',
 }
 
 -- Smooth scrolling

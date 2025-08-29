@@ -1,9 +1,35 @@
 return {
   'HakonHarnes/img-clip.nvim',
-  event = 'VeryLazy',
-  opts = {},
+  ft = { 'markdown', 'tex', 'typst', 'org' },
+  cmd = { 'PasteImage' },
   keys = {
-    -- suggested keymap
-    { '<leader>ip', '<cmd>PasteImage<cr>', desc = '[P]aste [I]mage From System Clipboard' },
+    { '<leader>ip', '<cmd>PasteImage<cr>', desc = '[P]aste [I]mage from clipboard' },
+    {
+      '<leader>if',
+      function()
+        local telescope = require 'telescope.builtin'
+        local actions = require 'telescope.actions'
+        local action_state = require 'telescope.actions.state'
+
+        telescope.find_files {
+          attach_mappings = function(_, map)
+            local function embed_image(prompt_bufnr)
+              local entry = action_state.get_selected_entry()
+              local filepath = entry[1]
+              actions.close(prompt_bufnr)
+
+              local img_clip = require 'img-clip'
+              img_clip.paste_image(nil, filepath)
+            end
+
+            map('i', '<CR>', embed_image)
+            map('n', '<CR>', embed_image)
+            return true
+          end,
+        }
+      end,
+      desc = '[I]mage from Telescope',
+    },
   },
+  opts = {},
 }

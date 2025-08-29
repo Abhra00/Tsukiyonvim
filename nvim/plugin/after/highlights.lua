@@ -61,6 +61,14 @@ vim.api.nvim_set_hl(0, 'MasonMutedBlock',         { fg = colors.base0D, bg = col
 -- Mini indent-scope symbol highlight
 vim.api.nvim_set_hl(0, 'MiniIndentscopeSymbol', { bg = 'none', fg = colors.base0D })
 
+-- Mini files highlights
+vim.api.nvim_set_hl(0, "MiniDiffSignAdd",         { fg = colors.base0D, bg = "none" })
+vim.api.nvim_set_hl(0, "MiniDiffSignChange",      { fg = colors.base0E, bg = "none" })
+vim.api.nvim_set_hl(0, "MiniDiffSignDelete",      { fg = colors.base08, bg = "none" })
+vim.api.nvim_set_hl(0, "MiniFilesTitleFocused",   { fg = colors.base00, bg = colors.base09, bold = true })
+vim.api.nvim_set_hl(0, "MiniFilesBorderModified", { link = 'FloatBorder' })
+
+
 -- Notification highlights
 vim.api.nvim_set_hl(0, 'NotifyBackground',  { bg = 'none', fg = 'none' })
 vim.api.nvim_set_hl(0, 'NotifyINFOBody',    { bg = 'none', fg = colors.base0D })

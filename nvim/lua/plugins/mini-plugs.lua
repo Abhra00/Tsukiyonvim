@@ -64,4 +64,37 @@ return {
     version = false,
     opts = {},
   },
+  {
+    'nvim-mini/mini.files',
+    version = false,
+    keys = {
+      {
+        '<leader>of',
+        function()
+          require('mini.files').open(vim.uv.cwd(), true)
+        end,
+        desc = '[O]pen [F]ile Explorer (cwd)',
+      },
+      {
+        '<leader>oF',
+        function()
+          require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = '[O]pen [F]ile Explorer (Current Dir)',
+      },
+    },
+    opts = {
+      windows = {
+        preview = true,
+        width_focus = 50,
+        width_nofocus = 25,
+        width_preview = 50,
+      },
+    },
+    config = function(_, opts)
+      require('mini.files').setup(opts)
+      -- setup git status for mini-files
+      require('utils.mini-files-git').setup()
+    end,
+  },
 }

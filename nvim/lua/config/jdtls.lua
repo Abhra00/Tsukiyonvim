@@ -78,7 +78,7 @@ local function java_keymaps()
   vim.keymap.set('n', '<leader>Jh', function()
     local enabled = vim.lsp.inlay_hint.is_enabled()
     vim.lsp.inlay_hint.enable(not enabled)
-    vim.notify("Inlay hints " .. (not enabled and "enabled" or "disabled"), vim.log.levels.INFO)
+    vim.notify('Inlay hints ' .. (not enabled and 'enabled' or 'disabled'), vim.log.levels.INFO)
   end, { desc = '[J]ava Toggle [H]ints' })
 end
 

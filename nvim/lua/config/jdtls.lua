@@ -74,6 +74,12 @@ local function java_keymaps()
   vim.keymap.set('n', '<leader>JT', "<Cmd> lua require('jdtls').test_class()<CR>", { desc = '[J]ava [T]est Class' })
   -- Set a Vim motion to <Space> + <Shift>J + u to update the project configuration
   vim.keymap.set('n', '<leader>Ju', '<Cmd> JdtUpdateConfig<CR>', { desc = '[J]ava [U]pdate Config' })
+  -- Set a Vim motion to <Space> + <Shift>J + h to toggle inlay hints
+  vim.keymap.set('n', '<leader>Jh', function()
+    local enabled = vim.lsp.inlay_hint.is_enabled()
+    vim.lsp.inlay_hint.enable(not enabled)
+    vim.notify("Inlay hints " .. (not enabled and "enabled" or "disabled"), vim.log.levels.INFO)
+  end, { desc = '[J]ava Toggle [H]ints' })
 end
 
 local function setup_jdtls()

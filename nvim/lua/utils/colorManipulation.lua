@@ -54,7 +54,22 @@ local function lighten(hex, pct)
   return string.format('#%s', rgb_to_hex(r, g, b))
 end
 
+local function blend(hex1, hex2, pct)
+  -- Convert both hex colors to RGB
+  local r1, g1, b1 = hex_to_rgb(string.sub(hex1, 2))
+  local r2, g2, b2 = hex_to_rgb(string.sub(hex2, 2))
+
+  -- Blend each component based on the percentage
+  local r = math.floor(r1 + (r2 - r1) * pct)
+  local g = math.floor(g1 + (g2 - g1) * pct)
+  local b = math.floor(b1 + (b2 - b1) * pct)
+
+  -- Return the blended color as hex
+  return string.format('#%s', rgb_to_hex(r, g, b))
+end
+
 return {
   darken = darken,
   lighten = lighten,
+  blend = blend,
 }

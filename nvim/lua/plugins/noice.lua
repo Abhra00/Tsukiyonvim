@@ -154,16 +154,16 @@ return {
       },
       hover = {
         relative = 'cursor',
-        position = { row = 4, col = 0 },
+        position = { row = 3, col = 0 },
         size = {
           width = 'auto',
           height = 'auto',
           max_width = 120,
-          max_height = 40,
+          max_height = 20,
         },
         border = {
           style = vim.g.border_style,
-          padding = { 2, 2 },
+          padding = { 1, 1 },
         },
       },
       mini = {

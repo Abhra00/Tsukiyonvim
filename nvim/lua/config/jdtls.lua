@@ -110,10 +110,10 @@ local function setup_jdtls()
     },
   }
 
-    -- LSP servers and clients are able to communicate to each other what features they support.
-    -- By default, Neovim doesn't support everything that is in the LSP specification.
-    -- When you add blink cmp, luasnip, etc. Neovim now has *more* capabilities.
-    -- So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
+  -- LSP servers and clients are able to communicate to each other what features they support.
+  -- By default, Neovim doesn't support everything that is in the LSP specification.
+  -- When you add blink cmp, luasnip, etc. Neovim now has *more* capabilities.
+  -- So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
   local lsp_capabilities = require('blink.cmp').get_lsp_capabilities()
 
   for k, v in pairs(lsp_capabilities) do

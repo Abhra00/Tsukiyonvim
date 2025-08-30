@@ -174,7 +174,8 @@ vim.api.nvim_set_hl(0, 'NoiceFormatConfirm',                 { bg = colors.base0
 -- Blink-Cmp highlights
 vim.api.nvim_set_hl(0, 'BlinkCmpMenuBorder',        { link = 'FloatBorder' }) -- link to float border
 vim.api.nvim_set_hl(0, 'BlinkCmpDocBorder',         { link = 'FloatBorder' }) -- link to float border
-vim.api.nvim_set_hl(0, 'BlinkCmpLabelMatch',        { fg = colors.base0B }) -- link to float border
+vim.api.nvim_set_hl(0, 'BlinkCmpLabelMatch',        { fg = colors.base0B }) -- green
+vim.api.nvim_set_hl(0, 'BlinkCmpGhostText',         { fg = colors.base09 }) -- orange
 vim.api.nvim_set_hl(0, 'BlinkCmpDocSeparator',      { fg = colors.base0D, bg = 'none' }) -- separate doc and detail with a blue line
 vim.api.nvim_set_hl(0, 'BlinkCmpKindText',          { fg = colors.base0B }) -- green
 vim.api.nvim_set_hl(0, 'BlinkCmpKindMethod',        { fg = colors.base0D }) -- blue

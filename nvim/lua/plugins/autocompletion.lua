@@ -47,10 +47,11 @@ return {
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
         preset = 'default',
-        ['<C-Z>'] = { 'accept', 'fallback' },
+        ['<C-y>'] = { 'accept', 'fallback' },
       },
 
       appearance = {
+        use_nvim_cmp_as_default = false,
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = 'mono',
@@ -93,27 +94,22 @@ return {
           border = vim.g.border_style,
           scrolloff = 1,
           scrollbar = true,
-          -- draw = {
-          --   padding = { 0, 0 }, -- side padding
-          --   components = {
-          --     kind_icon = {
-          --       text = function(ctx)
-          --         return ' ' .. ctx.kind_icon .. ctx.icon_gap .. ' '
-          --       end,
-          --     },
-          --   },
-          -- },
+          draw = {
+            treesitter = { 'lsp' },
+          },
         },
         documentation = {
-          auto_show_delay_ms = 0,
           auto_show = true,
+          auto_show_delay_ms = 200,
           window = {
             scrollbar = true,
             border = vim.g.border_style,
           },
         },
+        ghost_text = {
+          enabled = true,
+        },
       },
-      signature = { enabled = false },
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`

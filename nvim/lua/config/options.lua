@@ -1,72 +1,141 @@
 -- Options
--- NOTE: Options are automatically loaded before lazy.nvim startup
+-- Some QoL options for neovim
 
-vim.opt.encoding = "utf-8" -- Character encoding
-vim.opt.fileencoding = "utf-8" -- File character encoding
-vim.opt.number = true -- Line numbers
-vim.opt.title = true -- Show title in terminal
-vim.opt.autoindent = true -- Auto indentation
-vim.opt.smartindent = true -- Smart indentation
-vim.opt.hlsearch = true -- Search highlighting
-vim.opt.backup = false -- Disable backup files
-vim.opt.showcmd = true -- Show partial commands in status line
-vim.opt.cmdheight = 1 -- Command line height
-vim.opt.laststatus = 3 -- Global statusline
-vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.scrolloff = 10 -- Keep cursor away from screen edges
-vim.opt.shell = "fish" -- Default shell
-vim.opt.backupskip = { "/tmp/*", "/private/tmp/*" } -- Skip backup for temporary files
-vim.opt.inccommand = "split" -- Live preview of substitutions
-vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.smarttab = true -- Smart tab behavior
-vim.opt.breakindent = true -- Preserve indentation on wrapped lines
-vim.opt.shiftwidth = 2 -- Indentation width
-vim.opt.tabstop = 2 -- Tab width
-vim.opt.wrap = false -- No Wrap lines
-vim.opt.backspace = { "start", "eol", "indent" } -- Allow backspace over everything
-vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
-vim.opt.wildignore:append({ "*/node_modules/*" }) -- Ignore node_modules in file searches
-vim.opt.splitbelow = true -- Put new windows below current
-vim.opt.splitright = true -- Put new windows right of current
-vim.opt.splitkeep = "cursor" -- Keep cursor position when splitting
-vim.opt.mouse = "" -- Disable mouse support
-vim.opt.list = true -- Show invisible characters
-vim.opt.listchars = {
-  tab = "» ", -- Tab character
-  trail = "·", -- Trailing spaces
-  nbsp = "␣", -- Non-breaking space
-}
+-- Get icons
+local arrows = require('utils.icons').arrows
 
--- Undercurl
-vim.cmd([[let &t_Cs = "\e[4:3m"]])
-vim.cmd([[let &t_Ce = "\e[4:0m"]])
+-- For convenience
+local opt = vim.opt
 
-vim.opt.formatoptions:append({ "r" }) -- Add asterisks in block comments
+-- Basic Settings
+opt.number = true -- Line numbers
+opt.relativenumber = true -- Relative line numbers
+opt.cursorline = true -- Highlight current line
+opt.scrolloff = 4 -- Keep 4 lines above/below cursor
+opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+opt.wrap = false -- Don't wrap lines
+opt.linebreak = true -- Wrap lines at convenient points (if wrap enabled)
+opt.cmdheight = 1 -- Command line height
+opt.spelllang = { 'en' } -- Set language for spellchecking
+opt.ruler = false -- Disable the default ruler
 
--- File type associations
-vim.cmd([[au BufNewFile,BufRead *.astro setf astro]])
-vim.cmd([[au BufNewFile,BufRead Podfile setf ruby]])
+-- Tabbing / Indentation
+opt.tabstop = 4 -- Tab width
+opt.shiftwidth = 4 -- Indent width
+opt.softtabstop = 4 -- Soft tab stop
+opt.expandtab = true -- Use spaces instead of tabs
+opt.smartindent = true -- Smart auto-indenting
+opt.autoindent = true -- Copy indent from current line
+opt.shiftround = true -- Round indent
+opt.grepprg = 'rg --vimgrep' -- Use ripgrep if available
+opt.grepformat = '%f:%l:%c:%m' -- filename, line number, column, content
 
-if vim.fn.has("nvim-0.8") == 1 then
-  vim.opt.cmdheight = 0 -- Hide command line when not in use (Neovim 0.8+)
+-- Search Settings
+opt.ignorecase = true -- Case-insensitive search
+opt.smartcase = true -- Case-sensitive if uppercase in search
+opt.hlsearch = true -- Enable highlighting of search results
+opt.incsearch = true -- Show matches as you type
+opt.inccommand = 'nosplit' -- Preview incremental substitute
+
+-- Visual Settings
+opt.termguicolors = true -- Enable 24-bit colors
+opt.signcolumn = 'yes' -- Always show sign column
+opt.colorcolumn = '100' -- Show column at 100 characters
+opt.showmatch = true -- Highlight matching brackets
+opt.matchtime = 2 -- How long to show matching bracket
+opt.completeopt = 'menu,menuone,noselect' -- Completion options
+opt.showmode = false -- Don't show mode in command line
+opt.pumheight = 10 -- Popup menu height
+opt.pumblend = 10 -- Popup menu transparency
+opt.winblend = 0 -- Floating window transparency
+opt.conceallevel = 2 -- Hide * markup for bold and italic
+opt.concealcursor = '' -- Show markup even on cursor line
+opt.lazyredraw = false -- Redraw while executing macros (better UX)
+opt.redrawtime = 10000 -- Timeout for syntax highlighting redraw
+opt.maxmempattern = 20000 -- Max memory for pattern matching
+opt.synmaxcol = 300 -- Syntax highlighting column limit
+opt.laststatus = 3 -- Global statusline
+
+-- File Handling
+opt.backup = false -- Don't create backup files
+opt.writebackup = false -- Don't backup before overwriting
+opt.swapfile = false -- Don't create swap files
+opt.undofile = true -- Persistent undo
+opt.undolevels = 10000 -- Number of undo levels
+opt.updatetime = 200 -- Time in ms to trigger CursorHold
+opt.timeoutlen = 300 -- Time in ms to wait for mapped sequence
+opt.ttimeoutlen = 0 -- No wait for key code sequences
+opt.autoread = true -- Auto-reload file if changed outside
+opt.autowrite = true -- Enable auto write
+opt.diffopt:append 'vertical' -- Vertical diff splits
+opt.diffopt:append 'algorithm:patience' -- Better diff algorithm
+opt.diffopt:append 'linematch:60' -- Better diff highlighting (smart line matching)
+
+-- Set undo directory and ensure it exists
+local undodir = '~/.local/share/nvim/undodir' -- Undo directory path
+opt.undodir = vim.fn.expand(undodir) -- Expand to full path
+local undodir_path = vim.fn.expand(undodir)
+if vim.fn.isdirectory(undodir_path) == 0 then
+    vim.fn.mkdir(undodir_path, 'p') -- Create if not exists
 end
 
--- File types
-vim.filetype.add({
-  extension = {
-    mdx = "mdx",
-  },
-})
+-- Behavior Settings
+opt.errorbells = false -- Disable error sounds
+opt.backspace = 'indent,eol,start' -- Make backspace behave naturally
+opt.autochdir = false -- Don't change directory automatically
+opt.iskeyword:append '-' -- Treat dash as part of a word
+opt.path:append '**' -- Search into subfolders with `gf`
+opt.selection = 'inclusive' -- Use inclusive selection
+opt.mouse = 'a' -- Enable mouse support
+opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
+opt.modifiable = true -- Allow editing buffers
+opt.encoding = 'UTF-8' -- Use UTF-8 encoding
+opt.wildmenu = true -- Enable command-line completion menu
+opt.wildmode = 'longest:full,full' -- Completion mode for command-line
+opt.wildignorecase = true -- Case-insensitive tab completion in commands
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.smoothscroll = true -- Enable smooth scrolling
+opt.jumpoptions = 'view' -- Save view when jumping
+opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' } -- Session options
+opt.formatoptions = 'jcroqlnt' -- Format options
+opt.shortmess:append { W = true, I = true, c = true, C = true } -- Shorter messages
+opt.winminwidth = 5 -- Minimum window width
 
--- Blink cmp
-vim.g.lazyvim_blink_main = false
+-- Clipboard (conditional on SSH)
+opt.clipboard = vim.env.SSH_CONNECTION and '' or 'unnamedplus' -- Sync with system clipboard
 
--- Lazyvim picker
-vim.g.lazyvim_picker = "snacks"
+-- Cursor Settings
+opt.guicursor = {
+    'n-v-c:block', -- Normal, Visual, Command-line
+    'i-ci-ve:block', -- Insert, Command-line Insert, Visual-exclusive
+    'r-cr:hor20', -- Replace, Command-line Replace
+    'o:hor50', -- Operator-pending
+    'a:blinkwait700-blinkoff400-blinkon250', -- All modes: blinking
+    'sm:block-blinkwait175-blinkoff150-blinkon175', -- Showmatch mode
+}
 
--- Lazyvim python options
-vim.g.lazyvim_python_lsp = "basedpyright"
-vim.g.lazyvim_python_ruff = "ruff"
+-- Folding Settings
+opt.foldmethod = 'expr' -- Use expression for folding
+opt.foldlevel = 99 -- Keep all folds open by default
 
--- Lazyvim rust options
-vim.g.lazyvim_rust_diagnostics = "rust-analyzer"
+-- Split Behavior
+opt.splitbelow = true -- Horizontal splits open below
+opt.splitright = true -- Vertical splits open to the right
+opt.splitkeep = 'screen' -- Keep screen content stable when splitting (fixes noice.nvim bouncing)
+
+-- Show whitespace.
+vim.opt.list = true
+vim.opt.listchars = { space = '⋅', trail = '⋅', tab = '  ↦' }
+
+-- Fill chararcters
+opt.fillchars = { -- Set how listchars will look
+    eob = ' ',
+    fold = '·',
+    foldclose = arrows.right,
+    foldopen = arrows.down,
+    foldsep = ' ',
+    msgsep = '─',
+}
+
+-- Fix markdown indentation settings
+vim.g.markdown_recommended_style = 0

@@ -1,77 +1,66 @@
 -- Keymaps
--- NOTE: Keymaps are automatically loaded on the VeryLazy event
+-- Some QoL neovim keymaps
 
--- Discipline
-local discipline = require("bugs.discipline")
-discipline.cowboy()
+-- Remap for dealing with word wrap and adding jumps to the jumplist.
+vim.keymap.set('n', 'j', [[(v:count > 1 ? 'm`' . v:count : 'g') . 'j']], { expr = true })
+vim.keymap.set('n', 'k', [[(v:count > 1 ? 'm`' . v:count : 'g') . 'k']], { expr = true })
 
--- For convenience
-local keymap = vim.keymap
-local opts = { noremap = true, silent = true }
+-- Keeping the cursor centered.
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll downwards' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll upwards' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next result' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous result' })
 
--- Do things without affecting the registers
-keymap.set("n", "x", '"_x')
-keymap.set("n", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>P", '"0P')
-keymap.set("v", "<Leader>p", '"0p')
-keymap.set("n", "<Leader>c", '"_c')
-keymap.set("n", "<Leader>C", '"_C')
-keymap.set("v", "<Leader>c", '"_c')
-keymap.set("v", "<Leader>C", '"_C')
-keymap.set("n", "<Leader>d", '"_d')
-keymap.set("n", "<Leader>D", '"_D')
-keymap.set("v", "<Leader>d", '"_d')
-keymap.set("v", "<Leader>D", '"_D')
+-- Indent while remaining in visual mode.
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
 
--- Keep last yanked when pasting
-keymap.set("v", "p", '"_dP', opts)
+-- Formatting.
+vim.keymap.set('n', 'gQ', 'mzgggqG`z<Cmd>delmarks z<CR>zz', { desc = 'Format buffer' })
 
--- Delete a word backwards
-keymap.set("n", "dw", 'vb"_d')
+-- Open the package manager.
+vim.keymap.set('n', '<Leader>L', '<Cmd>Lazy<CR>', { desc = 'Lazy' })
 
--- Select all
-keymap.set("n", "<C-S-a>", "gg<S-v>G")
+-- Switch between windows.
+vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move to the left window', remap = true })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move to the bottom window', remap = true })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move to the top window', remap = true })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move to the right window', remap = true })
 
--- Disable continuations
-keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
-keymap.set("n", "<Leader>O", "O<Esc>^Da", opts)
+-- Tab navigation.
+vim.keymap.set('n', '<Leader>tc', '<Cmd>tabclose<CR>', { desc = 'Close tab page' })
+vim.keymap.set('n', '<Leader>tn', '<Cmd>tab split<CR>', { desc = 'New tab page' })
+vim.keymap.set('n', '<Leader>to', '<Cmd>tabonly<CR>', { desc = 'Close other tab pages' })
 
--- Jumplist
-keymap.set("n", "<C-m>", "<C-i>", opts)
-keymap.set("n", "<C-,>", "<C-o>", opts)
+-- Poweful <esc>.
+vim.keymap.set({ 'i', 's', 'n' }, '<esc>', function()
+    if require('luasnip').expand_or_jumpable() then
+        require('luasnip').unlink_current()
+    end
+    vim.cmd 'noh'
+    return '<esc>'
+end, { desc = 'Escape, clear hlsearch, and stop snippet session', expr = true })
 
--- Tab management
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "tx", "<Cmd>tabclose<CR>", opts)
-keymap.set("n", "<Tab>", "<Cmd>tabnext<CR>", opts)
-keymap.set("n", "<S-Tab>", "<Cmd>tabprev<CR>", opts)
+-- Make U opposite to u.
+vim.keymap.set('n', 'U', '<C-r>', { desc = 'Redo' })
 
--- Split window
-keymap.set("n", "ss", "<Cmd>split<CR>", opts)
-keymap.set("n", "sv", "<Cmd>vsplit<CR>", opts)
+-- Escape and save changes.
+vim.keymap.set({ 's', 'i', 'n', 'v' }, '<C-s>', '<esc>:w<CR>', { desc = 'Exit insert mode and save changes' })
+vim.keymap.set({ 's', 'i', 'n', 'v' }, '<C-S-s>', function()
+    vim.g.skip_formatting = true
+    return '<esc>:w<CR>'
+end, { desc = 'Exit insert mode and save changes (without formatting)', expr = true })
 
--- Move window
-keymap.set("n", "sh", "<C-w>h")
-keymap.set("n", "sj", "<C-w>j")
-keymap.set("n", "sk", "<C-w>k")
-keymap.set("n", "sl", "<C-w>l")
+-- Quickly go to the end of the line while in insert mode.
+vim.keymap.set({ 'i', 'c' }, '<C-l>', '<C-o>A', { desc = 'Go to the end of the line' })
 
--- Resize window
-keymap.set("n", "<C-w><Left>", "<C-w><")
-keymap.set("n", "<C-w><Right>", "<C-w>>")
-keymap.set("n", "<C-w><Up>", "<C-w>+")
-keymap.set("n", "<C-w><Down>", "<C-w>-")
+-- Mark management.
+vim.keymap.set('c', 'dm', 'delmarks', { desc = 'Delete marks' })
 
--- Diagnostics
-keymap.set("n", "<C-j>", function()
-  vim.diagnostic.jump({ count = 1, float = true })
-end, opts)
-
-keymap.set("n", "<C-k>", function()
-  vim.diagnostic.jump({ count = -1, float = true })
-end, opts)
-
--- Hex to hsl
-keymap.set("n", "<leader>r", function()
-  require("bugs.hsl").replaceHexWithHSL()
-end)
+-- Lazygit
+vim.keymap.set('n', '<Leader>gL', function()
+    require('utils.float_term').float_term(
+        'lazygit',
+        { size = { width = 0.85, height = 0.8 }, cwd = vim.b.gitsigns_status_dict.root }
+    )
+end, { desc = 'Lazygit' })

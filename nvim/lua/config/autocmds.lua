@@ -1,17 +1,28 @@
 -- Autocmds
--- NOTE: Autocmds are automatically loaded on the VeryLazy event
+-- Commands that will run automatically for specific events or filetypes
 
--- Turn off paste mode when leaving insert
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  command = "set nopaste",
+-- Restore last cursor position when reopening a file
+local last_cursor_group = vim.api.nvim_create_augroup('LastCursorGroup', {})
+vim.api.nvim_create_autocmd('BufReadPost', {
+    group = last_cursor_group,
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
 })
 
--- Disable the concealing in some file formats
--- The default conceallevel is 3 in LazyVim
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "json", "jsonc", "markdown" },
-  callback = function()
-    vim.opt.conceallevel = 0
-  end,
+-- Highlight the yanked text for 200ms
+local highlight_yank_group = vim.api.nvim_create_augroup('HighlightYank', {})
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = highlight_yank_group,
+    pattern = '*',
+    callback = function()
+        vim.hl.on_yank {
+            higroup = 'Yankflash',
+            timeout = 200,
+        }
+    end,
 })
